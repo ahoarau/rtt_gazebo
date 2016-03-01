@@ -20,7 +20,7 @@ public:
     POSITION
   };
 
-  DefaultGazeboComponent(std::string const& name) : 
+  DefaultGazeboComponent(std::string const& name) :
     RTT::TaskContext(name),
     kp_(1.0),
     kd_(0.1),
@@ -82,7 +82,7 @@ public:
   }
 
   //! Called from Gazebo
-  virtual void gazeboUpdateHook(gazebo::physics::ModelPtr model) 
+  virtual void gazeboUpdateHook(gazebo::physics::ModelPtr model)
   {
     if(model.get() == NULL) {return;}
 
@@ -122,11 +122,15 @@ public:
           break;
         case POSITION:
           for(unsigned int j=0; j < gazebo_joints_.size() && j < command_.size(); j++)
+#ifndef GAZEBO_6
             gazebo_joints_[j]->SetAngle(0,command_[j]);
+#else
+            gazebo_joints_[j]->SetPosition(0,command_[j]);
+#endif
           break;
       };
     }
-    
+
   }
 
 
@@ -184,7 +188,7 @@ protected:
 
   //! Synchronization
   RTT::os::MutexRecursive gazebo_mutex_;
-  
+
   //! The Gazebo Model
   //! The gazebo
   std::vector<gazebo::physics::JointPtr> gazebo_joints_;
