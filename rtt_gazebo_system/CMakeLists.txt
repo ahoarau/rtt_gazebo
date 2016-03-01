@@ -5,15 +5,10 @@ find_package(catkin REQUIRED COMPONENTS
   cmake_modules)
 
 
-# Depend on system install of Gazebo 
+# Depend on system install of Gazebo
 find_package(gazebo REQUIRED)
 
-# Add c++11 for Gazebo >= 6.0
-if(${GAZEBO_VERSION})
-  if(${GAZEBO_VERSION} GREATER 6)
-    list(APPEND CMAKE_CXX_FLAGS "-std=c++11")
-  endif()
-endif()
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
 find_package(OROCOS-RTT REQUIRED COMPONENTS rtt-scripting rtt-transport-corba)
 include(${OROCOS-RTT_USE_FILE_PATH}/UseOROCOS-RTT.cmake )
@@ -51,8 +46,8 @@ set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS -DRTT_STATIC)
 target_link_libraries(${PROJECT_NAME}
   ${GAZEBO_LIBRARIES}
   ${catkin_LIBRARIES}
-  ${OROCOS-RTT_LIBRARIES} 
-  ${OROCOS-RTT_RTT-SCRIPTING_LIBRARY} 
+  ${OROCOS-RTT_LIBRARIES}
+  ${OROCOS-RTT_RTT-SCRIPTING_LIBRARY}
   ${OROCOS-RTT_RTT-TRANSPORT-CORBA_LIBRARY}
   ${USE_OROCOS_LIBRARIES}
   ${Boost_LIBRARIES}
