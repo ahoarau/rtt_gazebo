@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8.3)
 project(rtt_gazebo_console)
 find_package(catkin REQUIRED)
 
-find_package(OROCOS-RTT REQUIRED COMPONENTS 
-  rtt-scripting 
+find_package(OROCOS-RTT REQUIRED COMPONENTS
+  rtt-scripting
   rtt-transport-corba)
 
 include(${OROCOS-RTT_USE_FILE_PATH}/UseOROCOS-RTT.cmake )
@@ -25,4 +25,8 @@ target_link_libraries(console ${USE_OROCOS_LIBRARIES})
 orocos_generate_package()
 
 # Install targets
-#install(TARGETS console)
+install(TARGETS console
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
